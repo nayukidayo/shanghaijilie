@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "shanghaijilie",
+  "dependencies": {
+    "@fastify/static": "^6.10.2",
+    "@influxdata/influxdb-client": "^1.33.2",
+    "fastify": "^4.15.0"
+  }
+}

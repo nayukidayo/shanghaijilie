@@ -1,0 +1,75 @@
+services:
+  influxdb:
+    restart: always
+    image: influxdb:2.6.1
+    logging:
+      driver: local
+    environment:
+      - INFLUXD_LOG_LEVEL=error
+      - INFLUXD_REPORTING_DISABLED=true
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-config:/etc/influxdb2
+      - influxdb-data:/var/lib/influxdb2
+      - influxdb-backup:/var/lib/backup
+  emqx:
+    restart: always
+    image: emqx:5.0.20
+    logging:
+      driver: local
+    environment:
+      - EMQX_NAME=emqx
+      - EMQX_HOST=127.0.0.1
+    ports:
+      - '1883:1883'
+      - '18083:18083'
+    volumes:
+      - emqx-data:/opt/emqx/data
+      - emqx-etc:/opt/emqx/etc
+      - emqx-log:/opt/emqx/log
+  telegraf:
+    restart: always
+    image: telegraf:1.26.0
+    logging:
+      driver: local
+    environment:
+      - MQTT_URL=tcp://emqx:1883
+      - MQTT_USERNAME=iot
+      - MQTT_PASSWORD=123
+      - INFLUX_URL=http://influxdb:8086
+      - INFLUX_ORG=shanghai
+      - INFLUX_BUCKET=dev
+      - INFLUX_TOKEN=5ln4fKImrUK1exLpDgP0qO6JvKltoJ9jprY2C3DSJCYTCg_WIhUxlqzDaJBomgOhvxfFLnC9VBljDa-_EGm8ZQ==
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - influxdb
+      - emqx
+  app:
+    restart: always
+    image: nayukidayo/shanghaijilie:1.0.0
+    logging:
+      driver: local
+    environment:
+      - EMQX_URL=http://emqx:18083
+      - EMQX_API_KEY=3da64992c5c96c20
+      - EMQX_SECRET_KEY=I3McpXXHexx6OUJkA9BtfMU9BrBB3d5ZaKOUsnzCBEQCN
+      - INFLUX_URL=http://influxdb:8086
+      - INFLUX_ORG=shanghai
+      - INFLUX_BUCKET=dev
+      - INFLUX_TOKEN=5ln4fKImrUK1exLpDgP0qO6JvKltoJ9jprY2C3DSJCYTCg_WIhUxlqzDaJBomgOhvxfFLnC9VBljDa-_EGm8ZQ==
+    ports:
+      - '443:443'
+    volumes:
+      - ./app/cert:/app/cert:ro
+    depends_on:
+      - influxdb
+      - emqx
+volumes:
+  influxdb-config:
+  influxdb-data:
+  influxdb-backup:
+  emqx-data:
+  emqx-etc:
+  emqx-log:
