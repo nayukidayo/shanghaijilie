@@ -73,7 +73,8 @@ export async function hour(deivce) {
     result[obj.flag].data.push((meta.precision * obj._value) | 0)
 
     if (result.time.length < 6) {
-      result.time.push(new Date(obj._time).getMinutes().toString())
+      const date = new Date(obj._time)
+      result.time.push(`${date.getHours()}:${date.getMinutes()}`)
     }
   }
 
