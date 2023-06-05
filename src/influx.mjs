@@ -74,7 +74,7 @@ export async function hour(deivce) {
 
     if (result.time.length < 6) {
       const date = new Date(obj._time)
-      result.time.push(`${date.getHours()}:${date.getMinutes()}`)
+      result.time.push(`${date.getHours()}:${date.getMinutes().toString().padEnd(2, '0')}`)
     }
   }
 
