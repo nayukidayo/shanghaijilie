@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import Fastify from 'fastify'
 import fastifyStatic from '@fastify/static'
-import { latest, history } from './influx.mjs'
+import { latest, history, hour } from './influx.mjs'
 import { health } from './emqx.mjs'
 import { PORT } from './env.mjs'
 
@@ -33,6 +33,13 @@ fastify.post('/api/telemetry/latest', async (req, res) => {
 fastify.post('/api/telemetry/history', async (req, res) => {
   const { device, flag, duration } = req.body
   const data = await history(device, flag, duration)
+  res.type('application/json').code(200)
+  return data
+})
+
+fastify.post('/api/telemetry/hour', async (req, res) => {
+  const { device } = req.body
+  const data = await hour(device)
   res.type('application/json').code(200)
   return data
 })

@@ -1,19 +1,19 @@
 const dianbiao = {
-  REG20020: {
-    name: 'A相电压',
-    unit: 'V',
-    precision: 0.1,
-  },
-  REG20021: {
-    name: 'B相电压',
-    unit: 'V',
-    precision: 0.1,
-  },
-  REG20022: {
-    name: 'C相电压',
-    unit: 'V',
-    precision: 0.1,
-  },
+  // REG20020: {
+  //   name: 'A相电压',
+  //   unit: 'V',
+  //   precision: 0.1,
+  // },
+  // REG20021: {
+  //   name: 'B相电压',
+  //   unit: 'V',
+  //   precision: 0.1,
+  // },
+  // REG20022: {
+  //   name: 'C相电压',
+  //   unit: 'V',
+  //   precision: 0.1,
+  // },
   REG20023: {
     name: 'AB线电压',
     unit: 'V',
@@ -49,11 +49,11 @@ const dianbiao = {
     unit: 'kW',
     precision: 0.1,
   },
-  REG20034: {
-    name: '电源频率',
-    unit: 'Hz',
-    precision: 0.01,
-  },
+  // REG20034: {
+  //   name: '电源频率',
+  //   unit: 'Hz',
+  //   precision: 0.01,
+  // },
   REG20036: {
     name: '正向有功电能',
     unit: 'kWh',
@@ -64,12 +64,12 @@ const dianbiao = {
 const zhendong = {
   REG20130: {
     name: '振动',
-    unit: 'mA',
-    precision: 1,
+    unit: 'g',
+    precision: 0.001,
   },
 }
 
-const wendu = {
+const yali = {
   AI1: {
     name: '压力',
     unit: 'kPa',
@@ -77,7 +77,7 @@ const wendu = {
   },
 }
 
-const yali = {
+const wendu = {
   AI2: {
     name: '温度',
     unit: '℃',
